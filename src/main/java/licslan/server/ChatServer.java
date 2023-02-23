@@ -1,8 +1,5 @@
 package licslan.server;
 
-import licslan.protocol.MessageCodecSharable;
-import licslan.protocol.ProcotolFrameDecoder;
-import cn.itcast.server.handler.*;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelDuplexHandler;
@@ -16,6 +13,8 @@ import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;
+import licslan.protocol.MessageCodecSharable;
+import licslan.protocol.ProcotolFrameDecoder;
 import licslan.server.handler.ChatRequestMessageHandler;
 import licslan.server.handler.GroupChatRequestMessageHandler;
 import licslan.server.handler.GroupCreateRequestMessageHandler;

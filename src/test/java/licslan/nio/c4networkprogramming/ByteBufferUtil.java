@@ -1,4 +1,5 @@
-package licslan.nio.c2;
+package licslan.nio.c4networkprogramming;
+
 import io.netty.util.internal.StringUtil;
 
 import java.nio.ByteBuffer;
@@ -104,16 +105,16 @@ public class ByteBufferUtil {
     private static void appendPrettyHexDump(StringBuilder dump, ByteBuffer buf, int offset, int length) {
         if (isOutOfBounds(offset, length, buf.capacity())) {
             throw new IndexOutOfBoundsException(
-                    "expected: " + "0 <= offset(" + offset + ") <= offset + length(" + length
-                            + ") <= " + "buf.capacity(" + buf.capacity() + ')');
+                "expected: " + "0 <= offset(" + offset + ") <= offset + length(" + length
+                    + ") <= " + "buf.capacity(" + buf.capacity() + ')');
         }
         if (length == 0) {
             return;
         }
         dump.append(
-                "         +-------------------------------------------------+" +
-                        NEWLINE + "         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |" +
-                        NEWLINE + "+--------+-------------------------------------------------+----------------+");
+            "         +-------------------------------------------------+" +
+                NEWLINE + "         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |" +
+                NEWLINE + "+--------+-------------------------------------------------+----------------+");
 
         final int startIndex = offset;
         final int fullRows = length >>> 4;
@@ -162,7 +163,7 @@ public class ByteBufferUtil {
         }
 
         dump.append(NEWLINE +
-                "+--------+-------------------------------------------------+----------------+");
+            "+--------+-------------------------------------------------+----------------+");
     }
 
     private static void appendHexDumpRowPrefix(StringBuilder dump, int row, int rowStartIndex) {

@@ -7,9 +7,9 @@ import java.nio.charset.Charset;
 
 public class Client {
   public static void main(String[] args) throws IOException {
-    SocketChannel sc2 = SocketChannel.open();
-    sc2.connect(new InetSocketAddress("localhost", 8080));
-    sc2.write(Charset.defaultCharset().encode("xxx-hi"));
+    SocketChannel sc = SocketChannel.open();
+    sc.connect(new InetSocketAddress("localhost", 8080));
+    sc.write(Charset.defaultCharset().encode("hi"));
     System.out.println("wait....");
   }
 }

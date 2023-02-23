@@ -8,7 +8,7 @@ import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.List;
 
-import licslan.nio.c2.ByteBufferUtil;
+import licslan.nio.c4networkprogramming.ByteBufferUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -36,7 +36,7 @@ public class Server {
     while (true) {
       //4.accept 建立与客户端连接  SocketChannel用来与客户端通信
       //log.debug("====connecting....");
-      //阻塞 线程停止运行  没有客户端连接时就会阻塞
+      //非阻塞下cpu疯狂空转  造成cpu资源的浪费 如何改造呢  selector出场啦
       SocketChannel accept = ssc.accept();
       if (accept != null) {
         //log.debug("====connected....{}", accept);
@@ -48,8 +48,8 @@ public class Server {
       for (SocketChannel channel : channelList) {
         //5.接收客户端发送的数据
         //log.debug("====read before....{}", channel);
-        //阻塞 线程停止运行 等待客户端发了数据 没有读到数据时就会阻塞住
         int read = channel.read(buffer);
+        //没有数据时也在不断循环  造成cpu资源浪费
         if (read > 0) {
           //切换到可读模式
           buffer.flip();

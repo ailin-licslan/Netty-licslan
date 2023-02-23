@@ -29,6 +29,7 @@ public class EventLoopServer {
                             public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
                                 ByteBuf buf = (ByteBuf) msg;
                                 log.debug(buf.toString(Charset.defaultCharset()));
+                                //invokeChannelRead 结论如果绑定是同一个线程 就直接调用 否则给一下个handler线程调用
                                 ctx.fireChannelRead(msg); // 让消息传递给下一个handler
                             }
                         }).addLast(group, "handler2", new ChannelInboundHandlerAdapter() {

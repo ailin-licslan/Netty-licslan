@@ -19,6 +19,7 @@ public class EventLoopServer {
                 // boss 和 worker
                 // 细分1：boss 只负责 ServerSocketChannel 上 accept 事件     worker 只负责 socketChannel 上的读写
                 .group(new NioEventLoopGroup(), new NioEventLoopGroup(2))
+              //.group(new NioEventLoopGroup())
                 .channel(NioServerSocketChannel.class)
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
@@ -30,14 +31,13 @@ public class EventLoopServer {
                                 log.debug(buf.toString(Charset.defaultCharset()));
                                 ctx.fireChannelRead(msg); // 让消息传递给下一个handler
                             }
-                        });
-                        /*.addLast(group, "handler2", new ChannelInboundHandlerAdapter() {
+                        }).addLast(group, "handler2", new ChannelInboundHandlerAdapter() {
                             @Override                                         // ByteBuf
                             public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
                                 ByteBuf buf = (ByteBuf) msg;
                                 log.debug(buf.toString(Charset.defaultCharset()));
                             }
-                        });*/
+                        });
                     }
                 })
                 .bind(8080);

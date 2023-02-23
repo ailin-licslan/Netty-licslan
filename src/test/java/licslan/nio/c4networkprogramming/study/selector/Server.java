@@ -12,8 +12,6 @@ import java.util.Iterator;
 import licslan.nio.c2.ByteBufferUtil;
 import lombok.extern.slf4j.Slf4j;
 
-import static licslan.nio.c2.ByteBufferUtil.debugRead;
-
 @Slf4j
 public class Server {
 
@@ -34,6 +32,7 @@ public class Server {
         ByteBufferUtil.debugAll(target);
       }
     }
+    //写模式
     source.compact();
   }
 
@@ -107,6 +106,16 @@ public class Server {
 //              buffer.flip();
 //              debugRead(buffer);
               split(buffer);
+              //扩容  netty这里做的更加好 可以自动扩缩容 bytebuffer 参考p36 思路
+              //优点消息连续容易处理  缺点数据拷贝消耗性能  netty更好  服务器有哪些思路可以来设计呢  高级程序员需要思考的问题
+              if (buffer.position() == buffer.limit()) {
+                ByteBuffer newbuffer = ByteBuffer.allocate(buffer.capacity() * 2);
+                //切换读模式
+                buffer.flip();
+                newbuffer.put(buffer);
+                //将扩容后的大小放回去
+                key.attach(newbuffer);
+              }
 
             }
 

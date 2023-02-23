@@ -51,7 +51,11 @@ public class MultiThreadServer {
         private Thread thread;
         private Selector selector;
         private String name;
+        //是否执行过  可见性
         private volatile boolean start = false; // 还未初始化
+
+        //队列的用法在netty中有实现  在线程中传递事件
+
         private ConcurrentLinkedQueue<Runnable> queue = new ConcurrentLinkedQueue<>();
         public Worker(String name) {
             this.name = name;
@@ -71,6 +75,7 @@ public class MultiThreadServer {
 
         @Override
         public void run() {
+            //监测读写事件
             while(true) {
                 try {
                     selector.select(); // worker-0  阻塞
@@ -78,10 +83,12 @@ public class MultiThreadServer {
                     while (iter.hasNext()) {
                         SelectionKey key = iter.next();
                         iter.remove();
+                        //可读事件
                         if (key.isReadable()) {
                             ByteBuffer buffer = ByteBuffer.allocate(16);
                             SocketChannel channel = (SocketChannel) key.channel();
                             log.debug("read...{}", channel.getRemoteAddress());
+                            //细节 半包 粘包 大小控制
                             channel.read(buffer);
                             buffer.flip();
                             debugAll(buffer);

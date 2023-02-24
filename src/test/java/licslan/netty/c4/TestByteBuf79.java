@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBufAllocator;
 import static io.netty.buffer.ByteBufUtil.appendPrettyHexDump;
 import static io.netty.util.internal.StringUtil.NEWLINE;
 
-public class TestByteBuf {
+public class TestByteBuf79 {
     public static void main(String[] args) {
 
         ByteBuf buf = ByteBufAllocator.DEFAULT.buffer();

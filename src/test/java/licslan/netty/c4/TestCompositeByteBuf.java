@@ -19,6 +19,6 @@ public class TestCompositeByteBuf {
 
         CompositeByteBuf buffer = ByteBufAllocator.DEFAULT.compositeBuffer();
         buffer.addComponents(true, buf1, buf2);
-        TestByteBuf.log(buffer);
+        TestByteBuf79.log(buffer);
     }
 }

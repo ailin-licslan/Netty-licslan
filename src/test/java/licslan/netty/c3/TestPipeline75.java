@@ -14,6 +14,9 @@ import java.nio.charset.Charset;
 
 @Slf4j
 public class TestPipeline75 {
+
+    //启动CloseFutureClient作为客户端  控制台输入
+
     public static void main(String[] args) {
         new ServerBootstrap()
                 .group(new NioEventLoopGroup())
@@ -23,7 +26,7 @@ public class TestPipeline75 {
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         // 1. 通过 channel 拿到 pipeline
                         ChannelPipeline pipeline = ch.pipeline();
-                        // 2. 添加处理器 head ->  h1 -> h2 ->  h4 -> h3 -> h5 -> h6 -> tail
+                        // 2. 添加处理器 head ->  h1 -> h2 ->  h4 -> h3 -> h5 -> h6 -> tail 双向链表
                         pipeline.addLast("h1", new ChannelInboundHandlerAdapter(){
                             @Override
                             public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -43,6 +46,10 @@ public class TestPipeline75 {
                             @Override
                             public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
                                 log.debug("3");
+                                //ctx.writeAndFlush 与 ch.writeAndFlush 区别
+                                //ctx从当前的handler从后往前找
+                                //ch从tail的handler从后往前找
+
                                 ctx.writeAndFlush(ctx.alloc().buffer().writeBytes("server...".getBytes()));
 //                                ch.writeAndFlush(ctx.alloc().buffer().writeBytes("server...".getBytes()));
                             }

@@ -16,7 +16,11 @@ import lombok.extern.slf4j.Slf4j;
 import java.nio.charset.Charset;
 
 @Slf4j
-public class TestEmbeddedChannel {
+public class TestEmbeddedChannel78 {
+
+
+    //测试 入站 出站
+
     public static void main(String[] args) {
         ChannelInboundHandlerAdapter h1 = new ChannelInboundHandlerAdapter() {
             @Override

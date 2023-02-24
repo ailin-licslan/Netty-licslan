@@ -1,17 +1,17 @@
 package licslan.protocol;
 
-import licslan.message.Message;
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.ByteToMessageCodec;
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.ByteToMessageCodec;
+import licslan.message.Message;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @ChannelHandler.Sharable
@@ -48,12 +48,18 @@ public class MessageCodec extends ByteToMessageCodec<Message> {
 
 
     //解码
+
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+        //魔数
         int magicNum = in.readInt();
+        //版本号
         byte version = in.readByte();
+        //序列号类型
         byte serializerType = in.readByte();
+        //消息类型
         byte messageType = in.readByte();
+        //
         int sequenceId = in.readInt();
         in.readByte();
         int length = in.readInt();

@@ -17,6 +17,9 @@ import java.util.List;
 @ChannelHandler.Sharable
 public class MessageCodec extends ByteToMessageCodec<Message> {
 
+
+    //编码
+
     @Override
     public void encode(ChannelHandlerContext ctx, Message msg, ByteBuf out) throws Exception {
         // 1. 4 字节的魔数
@@ -42,6 +45,9 @@ public class MessageCodec extends ByteToMessageCodec<Message> {
         out.writeBytes(bytes);
     }
 
+
+
+    //解码
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
         int magicNum = in.readInt();

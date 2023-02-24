@@ -31,7 +31,10 @@ public class TestHttp {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
                     ch.pipeline().addLast(new LoggingHandler(LogLevel.DEBUG));
+                    //HTTP协议 编解码器  HttpServerCodec() 既是出站处理器也是入站处理器
                     ch.pipeline().addLast(new HttpServerCodec());
+
+                    //SimpleChannelInboundHandler 只关心 httpRequest  进行选择性处理
                     ch.pipeline().addLast(new SimpleChannelInboundHandler<HttpRequest>() {
                         @Override
                         protected void channelRead0(ChannelHandlerContext ctx, HttpRequest msg) throws Exception {

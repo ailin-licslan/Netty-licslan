@@ -29,7 +29,12 @@ public class Server2 {
             serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
+
+                    //解码器 正确处理后再给下一个  入站是依次顺序的
+
+                    //缺点  浪费空间   可以解决半包  粘包
                     ch.pipeline().addLast(new FixedLengthFrameDecoder(10));
+
                     ch.pipeline().addLast(new LoggingHandler(LogLevel.DEBUG));
                 }
             });

@@ -1,5 +1,10 @@
 package licslan.advance.c1;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Random;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;
@@ -11,10 +16,6 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Random;
 
 public class Client3 {
     static final Logger log = LoggerFactory.getLogger(Client1.class);
@@ -55,6 +56,7 @@ public class Client3 {
                                 c++;
                                 buf.writeBytes(sb.toString().getBytes());
                             }
+                            //写到服务端
                             ctx.writeAndFlush(buf);
                         }
                     });

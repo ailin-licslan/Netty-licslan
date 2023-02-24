@@ -1,5 +1,7 @@
 package licslan.advance.c2;
 
+import java.nio.charset.Charset;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;
@@ -11,8 +13,6 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LoggingHandler;
 import lombok.extern.slf4j.Slf4j;
-
-import java.nio.charset.Charset;
 
 @Slf4j
 public class TestRedis {
@@ -40,6 +40,7 @@ public class TestRedis {
                     ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
                         @Override
                         public void channelActive(ChannelHandlerContext ctx) {
+                            //向redis发消息
                             ByteBuf buf = ctx.alloc().buffer();
                             buf.writeBytes("*3".getBytes());
                             buf.writeBytes(LINE);
@@ -58,6 +59,8 @@ public class TestRedis {
                             ctx.writeAndFlush(buf);
                         }
 
+
+                        //接收redis返回的响应
                         @Override
                         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
                             ByteBuf buf = (ByteBuf) msg;

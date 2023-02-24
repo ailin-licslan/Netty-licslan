@@ -29,6 +29,8 @@ public class Server3 {
             serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
+
+                    //行解码器
                     ch.pipeline().addLast(new LineBasedFrameDecoder(1024));
                     ch.pipeline().addLast(new LoggingHandler(LogLevel.DEBUG));
                 }

@@ -1,5 +1,11 @@
 package licslan.advance.c1;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
+import java.util.Random;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;
@@ -11,11 +17,6 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Arrays;
-import java.util.Random;
 
 public class Client2 {
     static final Logger log = LoggerFactory.getLogger(Client1.class);
@@ -25,6 +26,8 @@ public class Client2 {
         System.out.println("finish");
     }
 
+
+    //定长消息
     public static byte[] fill10Bytes(char c, int len) {
         byte[] bytes = new byte[10];
         Arrays.fill(bytes, (byte) '_');
@@ -55,6 +58,8 @@ public class Client2 {
                             for (int i = 0; i < 10; i++) {
                                 byte[] bytes = fill10Bytes(c, r.nextInt(10) + 1);
                                 c++;
+
+                                //写到buf中
                                 buf.writeBytes(bytes);
                             }
                             ctx.writeAndFlush(buf);

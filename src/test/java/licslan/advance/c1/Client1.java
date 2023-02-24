@@ -40,6 +40,8 @@ public class Client1 {
                             //每次发16个字节  但是接收的时候出现了  40 粘包问题   4 半包问题
                             buf.writeBytes(new byte[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17});
                             ctx.writeAndFlush(buf);
+
+                            //解放方案一  短链接解决粘包问题  发一次断开一次  效率低 不能解决半包问题
                             ctx.channel().close();
                         }
                     });

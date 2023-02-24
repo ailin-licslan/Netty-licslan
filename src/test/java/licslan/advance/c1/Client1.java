@@ -1,5 +1,8 @@
 package licslan.advance.c1;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;
@@ -9,8 +12,6 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Client1 {
     static final Logger log = LoggerFactory.getLogger(Client1.class);
@@ -36,6 +37,7 @@ public class Client1 {
                         @Override
                         public void channelActive(ChannelHandlerContext ctx) {
                             ByteBuf buf = ctx.alloc().buffer(16);
+                            //每次发16个字节  但是接收的时候出现了  40 粘包问题   4 半包问题
                             buf.writeBytes(new byte[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17});
                             ctx.writeAndFlush(buf);
                             ctx.channel().close();

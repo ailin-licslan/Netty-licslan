@@ -24,7 +24,6 @@ import licslan.server.handler.GroupQuitRequestMessageHandler;
 import licslan.server.handler.LoginRequestMessageHandler;
 import licslan.server.handler.QuitHandler;
 import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
 public class ChatServer {
     public static void main(String[] args) {

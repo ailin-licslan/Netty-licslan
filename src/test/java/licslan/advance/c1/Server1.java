@@ -20,7 +20,7 @@ public class Server1 {
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
             serverBootstrap.channel(NioServerSocketChannel.class);
-            // 调整系统的接收缓冲器（滑动窗口）
+            // 调整系统的接收缓冲器（滑动窗口）  利用http协议处理都有半包 粘包问题
 //            serverBootstrap.option(ChannelOption.SO_RCVBUF, 10);
             // 调整 netty 的接收缓冲区（byteBuf）
             serverBootstrap.childOption(ChannelOption.RCVBUF_ALLOCATOR, new AdaptiveRecvByteBufAllocator(16, 16, 16));

@@ -7,7 +7,8 @@ import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 
 /**
- * 用于扩展序列化、反序列化算法
+ * 用于扩展序列化、反序列化算法  序列化算法的扩展
+ * @author licslan
  */
 public interface Serializer {
 

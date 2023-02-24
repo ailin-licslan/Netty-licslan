@@ -181,6 +181,7 @@ public class ChatClient {
                         // 在出现异常时触发
 
 
+
                         @Override
                         public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
                             log.debug("连接已经断开，按任意键退出..{}", cause.getMessage());

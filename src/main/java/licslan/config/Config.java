@@ -1,14 +1,15 @@
 package licslan.config;
 
-import licslan.protocol.Serializer;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import licslan.protocol.Serializer;
+
 public abstract class Config {
     static Properties properties;
     static {
+        //读取配置文件
         try (InputStream in = Config.class.getResourceAsStream("/application.properties")) {
             properties = new Properties();
             properties.load(in);
@@ -24,8 +25,11 @@ public abstract class Config {
             return Integer.parseInt(value);
         }
     }
+
+
     public static Serializer.Algorithm getSerializerAlgorithm() {
         String value = properties.getProperty("serializer.algorithm");
+        //序列化算法默认JAVA
         if(value == null) {
             return Serializer.Algorithm.Java;
         } else {

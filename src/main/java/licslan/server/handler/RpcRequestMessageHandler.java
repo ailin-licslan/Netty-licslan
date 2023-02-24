@@ -1,16 +1,16 @@
 package licslan.server.handler;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
 import licslan.message.RpcRequestMessage;
 import licslan.message.RpcResponseMessage;
 import licslan.server.service.HelloService;
 import licslan.server.service.ServicesFactory;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 @Slf4j
 @ChannelHandler.Sharable
@@ -37,7 +37,7 @@ public class RpcRequestMessageHandler extends SimpleChannelInboundHandler<RpcReq
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         RpcRequestMessage message = new RpcRequestMessage(
                 1,
-                "cn.itcast.server.service.HelloService",
+                "licslan.server.service.HelloService",
                 "sayHello",
                 String.class,
                 new Class[]{String.class},

@@ -40,8 +40,12 @@ public class ChatClient {
         NioEventLoopGroup group = new NioEventLoopGroup();
         LoggingHandler LOGGING_HANDLER = new LoggingHandler(LogLevel.DEBUG);
         MessageCodecSharable MESSAGE_CODEC = new MessageCodecSharable();
+
+        //保证nio线程与system.in线程的通信
         CountDownLatch WAIT_FOR_LOGIN = new CountDownLatch(1);
+        //登录标识
         AtomicBoolean LOGIN = new AtomicBoolean(false);
+        //退出标识
         AtomicBoolean EXIT = new AtomicBoolean(false);
         Scanner scanner = new Scanner(System.in);
         try {
@@ -80,7 +84,7 @@ public class ChatClient {
                                     // 如果登录成功
                                     LOGIN.set(true);
                                 }
-                                // 唤醒 system in 线程
+                                // 唤醒 system in 线程  计数减一
                                 WAIT_FOR_LOGIN.countDown();
                             }
                         }
@@ -88,7 +92,7 @@ public class ChatClient {
                         // 在连接建立后触发 active 事件
                         @Override
                         public void channelActive(ChannelHandlerContext ctx) throws Exception {
-                            // 负责接收用户在控制台的输入，负责向服务器发送各种消息
+                            // 负责接收用户在控制台的输入，负责向服务器发送各种消息 单独起一个线程
                             new Thread(() -> {
                                 System.out.println("请输入用户名:");
                                 String username = scanner.nextLine();
@@ -100,19 +104,21 @@ public class ChatClient {
                                 if(EXIT.get()){
                                     return;
                                 }
-                                // 构造消息对象
+                                // 构造消息对象  用户名密码可以校验
                                 LoginRequestMessage message = new LoginRequestMessage(username, password);
                                 System.out.println(message);
                                 // 发送消息
                                 ctx.writeAndFlush(message);
                                 System.out.println("等待后续操作...");
                                 try {
+                                    //等待服务器返回消息 channelRead逻辑
                                     WAIT_FOR_LOGIN.await();
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
                                 // 如果登录失败
                                 if (!LOGIN.get()) {
+                                    //服务器优雅停止
                                     ctx.channel().close();
                                     return;
                                 }
@@ -173,6 +179,7 @@ public class ChatClient {
                         }
 
                         // 在出现异常时触发
+
 
                         @Override
                         public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {

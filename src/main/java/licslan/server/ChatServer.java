@@ -31,6 +31,7 @@ public class ChatServer {
         NioEventLoopGroup worker = new NioEventLoopGroup();
         LoggingHandler LOGGING_HANDLER = new LoggingHandler(LogLevel.DEBUG);
         MessageCodecSharable MESSAGE_CODEC = new MessageCodecSharable();
+        //login
         LoginRequestMessageHandler LOGIN_HANDLER = new LoginRequestMessageHandler();
         ChatRequestMessageHandler CHAT_HANDLER = new ChatRequestMessageHandler();
         GroupCreateRequestMessageHandler GROUP_CREATE_HANDLER = new GroupCreateRequestMessageHandler();
@@ -65,10 +66,15 @@ public class ChatServer {
                             }
                         }
                     });
+                    //登录
                     ch.pipeline().addLast(LOGIN_HANDLER);
+                    //聊天
                     ch.pipeline().addLast(CHAT_HANDLER);
+                    //创建群组
                     ch.pipeline().addLast(GROUP_CREATE_HANDLER);
+                    //加入群
                     ch.pipeline().addLast(GROUP_JOIN_HANDLER);
+                    //群成员
                     ch.pipeline().addLast(GROUP_MEMBERS_HANDLER);
                     ch.pipeline().addLast(GROUP_QUIT_HANDLER);
                     ch.pipeline().addLast(GROUP_CHAT_HANDLER);

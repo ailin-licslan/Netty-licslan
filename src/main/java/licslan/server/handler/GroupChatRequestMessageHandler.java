@@ -1,15 +1,19 @@
 package licslan.server.handler;
 
-import licslan.message.GroupChatRequestMessage;
-import licslan.message.GroupChatResponseMessage;
-import licslan.server.session.GroupSessionFactory;
+import java.util.List;
+
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import licslan.message.GroupChatRequestMessage;
+import licslan.message.GroupChatResponseMessage;
+import licslan.server.session.GroupSessionFactory;
 
-import java.util.List;
-
+/**
+ * @author licslan
+ * 群聊
+ */
 @ChannelHandler.Sharable
 public class GroupChatRequestMessageHandler extends SimpleChannelInboundHandler<GroupChatRequestMessage> {
     @Override

@@ -4,12 +4,14 @@ import io.netty.channel.EventLoop;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.util.concurrent.DefaultPromise;
+import io.netty.util.concurrent.Future;
+import io.netty.util.concurrent.GenericFutureListener;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ExecutionException;
 
 @Slf4j
-public class TestNettyPromise {
+public class TestNettyPromise74 {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         // 1. 准备 EventLoop 对象
         EventLoop eventLoop = new NioEventLoopGroup().next();
@@ -30,7 +32,17 @@ public class TestNettyPromise {
         }).start();
         // 4. 接收结果的线程
         log.debug("等待结果...");
+        //同步等待
         log.debug("结果是: {}", promise.get());
+
+
+        //addListener 异步的
+//        promise.addListener(new GenericFutureListener<Future<? super Integer>>(){
+//            @Override
+//            public void operationComplete(Future<? super Integer> future) throws Exception {
+//                log.debug("接收结果:{}", future.getNow());
+//            }
+//        });
     }
 
 }

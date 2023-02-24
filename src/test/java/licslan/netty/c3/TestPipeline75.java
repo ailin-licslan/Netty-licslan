@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.nio.charset.Charset;
 
 @Slf4j
-public class TestPipeline {
+public class TestPipeline75 {
     public static void main(String[] args) {
         new ServerBootstrap()
                 .group(new NioEventLoopGroup())

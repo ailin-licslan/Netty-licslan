@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class TestEventLoop {
+public class TestEventLoop58 {
     public static void main(String[] args) {
         // 1. 创建事件循环组
         EventLoopGroup group = new NioEventLoopGroup(2); // io 事件，普通任务，定时任务

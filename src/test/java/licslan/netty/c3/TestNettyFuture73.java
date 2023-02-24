@@ -12,10 +12,12 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 @Slf4j
-public class TestNettyFuture {
+public class TestNettyFuture73 {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         NioEventLoopGroup group = new NioEventLoopGroup();
         EventLoop eventLoop = group.next();
+
+        //返回的是netty 的 future
         Future<Integer> future = eventLoop.submit(new Callable<Integer>() {
             @Override
             public Integer call() throws Exception {
@@ -24,8 +26,12 @@ public class TestNettyFuture {
                 return 70;
             }
         });
+        //同步方式
 //        log.debug("等待结果");
 //        log.debug("结果是 {}", future.get());
+
+
+        //异步方式
         future.addListener(new GenericFutureListener<Future<? super Integer>>(){
             @Override
             public void operationComplete(Future<? super Integer> future) throws Exception {

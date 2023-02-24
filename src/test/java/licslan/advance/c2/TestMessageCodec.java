@@ -12,6 +12,7 @@ public class TestMessageCodec {
     public static void main(String[] args) throws Exception {
         EmbeddedChannel channel = new EmbeddedChannel(
                 new LoggingHandler(),
+                //不能倍shareable
                 new LengthFieldBasedFrameDecoder(
                         1024, 12, 4, 0, 0),
                 new MessageCodec()

@@ -4,7 +4,7 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
 /**
  * @author licslan
- * 解决半包 粘包  需要记录状态 不可共享
+ * 解决半包 粘包的解码器  需要记录状态 不可共享
  */
 public class ProcotolFrameDecoder extends LengthFieldBasedFrameDecoder {
 

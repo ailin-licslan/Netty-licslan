@@ -1,11 +1,7 @@
 package licslan.client;
 
-import licslan.client.handler.RpcResponseMessageHandler;
-import licslan.message.RpcRequestMessage;
-import licslan.protocol.MessageCodecSharable;
-import licslan.protocol.ProcotolFrameDecoder;
-import licslan.protocol.SequenceIdGenerator;
-import licslan.server.service.HelloService;
+import java.lang.reflect.Proxy;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -15,9 +11,13 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.util.concurrent.DefaultPromise;
+import licslan.client.handler.RpcResponseMessageHandler;
+import licslan.message.RpcRequestMessage;
+import licslan.protocol.MessageCodecSharable;
+import licslan.protocol.ProcotolFrameDecoder;
+import licslan.protocol.SequenceIdGenerator;
+import licslan.server.service.HelloService;
 import lombok.extern.slf4j.Slf4j;
-
-import java.lang.reflect.Proxy;
 
 @Slf4j
 public class RpcClientManager {
@@ -30,8 +30,11 @@ public class RpcClientManager {
 //        System.out.println(service.sayHello("wangwu"));
     }
 
-    // 创建代理类
+    // 创建代理类  代理模式
+
+
     public static <T> T getProxyService(Class<T> serviceClass) {
+
         ClassLoader loader = serviceClass.getClassLoader();
         Class<?>[] interfaces = new Class[]{serviceClass};
         //                                                            sayHello  "张三"
@@ -73,7 +76,8 @@ public class RpcClientManager {
     private static Channel channel = null;
     private static final Object LOCK = new Object();
 
-    // 获取唯一的 channel 对象
+    // 获取唯一的 channel 对象 单例模式 DCL
+
     public static Channel getChannel() {
         if (channel != null) {
             return channel;
@@ -88,6 +92,7 @@ public class RpcClientManager {
     }
 
     // 初始化 channel 方法
+
     private static void initChannel() {
         NioEventLoopGroup group = new NioEventLoopGroup();
         LoggingHandler LOGGING_HANDLER = new LoggingHandler(LogLevel.DEBUG);
